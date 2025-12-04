@@ -37,12 +37,15 @@ def login():
     if not user:
         return {"message": "credenciais inválidas"}
     
-    access_token = create_access_token(identity=user.id)
+    #user_id_str = f"{user.id}"
+    user_id_str = str({user.id})
+    
+    access_token = create_access_token(identity=user_id_str)
     return {"access_token": access_token}, 200
 
 @bp.get('/me')
 @jwt_required()
 def me():
-    user_id = get_jwt_identity
+    user_id = get_jwt_identity()
     return {"user_id": user_id}, 200
     
