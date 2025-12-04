@@ -2,11 +2,19 @@ from flask import Flask
 from .config import Config
 from .database import db
 from flask_jwt_extended import JWTManager
-
+from flask_cors import CORS
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
+
+    CORS(app, resources={
+        r"/*": {
+            "origins": ["http://localhost:4200"],
+            "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+            "allow_headers": ["Content-Type", "Authorization"]
+        }
+    })
 
     # extensões
     db.init_app(app)

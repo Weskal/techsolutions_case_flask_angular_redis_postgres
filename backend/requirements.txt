@@ -5,3 +5,4 @@ flask-jwt-extended
 werkzeug
 python-dotenv    
 redis==5.0.1
+flask-cors
