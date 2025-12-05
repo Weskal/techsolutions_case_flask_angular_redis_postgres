@@ -1,14 +1,13 @@
 <div class="home-container">
   <header class="header">
     <nav class="navbar">
-      <div class="logo" routerLink="/home" style="cursor: pointer;">
+      <div class="logo">
         <h1>🦈 Shark Gaming</h1>
       </div>
       <ul class="nav-links">
         <li><a routerLink="/home">Início</a></li>
         <li><a routerLink="/products">Produtos</a></li>
-        <li *ngIf="!isLoggedIn"><a routerLink="/login">Login</a></li>
-        <li *ngIf="isLoggedIn"><a (click)="logout()" style="cursor: pointer;">Sair</a></li>
+        <li><a routerLink="/login">Login</a></li>
       </ul>
     </nav>
   </header>
@@ -63,7 +62,29 @@
     </div>
   </section>
 
+  <section class="products-preview">
+    <h2>Categorias Populares</h2>
+    <div class="categories-grid">
+      <div class="category-card">
+        <img src="https://via.placeholder.com/300x200/667eea/ffffff?text=Teclados" alt="Teclados">
+        <h3>Teclados Mecânicos</h3>
+      </div>
+      <div class="category-card">
+        <img src="https://via.placeholder.com/300x200/764ba2/ffffff?text=Mouses" alt="Mouses">
+        <h3>Mouses Gamer</h3>
+      </div>
+      <div class="category-card">
+        <img src="https://via.placeholder.com/300x200/667eea/ffffff?text=Headsets" alt="Headsets">
+        <h3>Headsets</h3>
+      </div>
+      <div class="category-card">
+        <img src="https://via.placeholder.com/300x200/764ba2/ffffff?text=Monitores" alt="Monitores">
+        <h3>Monitores</h3>
+      </div>
+    </div>
+  </section>
+
   <footer class="footer">
-    <p>&copy; 2025 Shark Gaming. Todos os direitos reservados.</p>
+    <p>&copy; 2024 Shark Gaming. Todos os direitos reservados.</p>
   </footer>
 </div>

@@ -4,9 +4,8 @@ import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register',
-  standalone: false,
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
   username: string = '';
@@ -40,13 +39,14 @@ export class RegisterComponent {
     }
 
     this.authService.register(this.username, this.password).subscribe({
-      next: (response: any) => {
+      next: (response) => {
         this.successMessage = 'Cadastro realizado com sucesso! Redirecionando...';
         setTimeout(() => {
           this.router.navigate(['/login']);
         }, 2000);
       },
-      error: (error: any) => {
+      error: (error) => {
+        // Seu backend retorna { "message": "erro" }
         if (error.error?.message) {
           if (error.error.message === 'username_already_exists') {
             this.errorMessage = 'Nome de usuário já existe';

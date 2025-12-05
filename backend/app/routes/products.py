@@ -9,6 +9,12 @@ import redis, json
 
 bp = Blueprint('products', __name__, url_prefix='/products')
 
+# Handler para OPTIONS (preflight CORS)
+@bp.route('/', methods=['OPTIONS'])
+@bp.route('/<int:product_id>', methods=['OPTIONS'])
+def handle_options(product_id=None):
+    return '', 204
+
 @bp.get('/')
 @jwt_required()
 def list_products():
@@ -61,7 +67,7 @@ def delete_product(product_id):
     p = db.session.get(Product, product_id)
     if not p:
         return {"error": "Produto não encontrado"}, 404
-    data = request.get_json() or {}
+    
     message = {"op": "delete", "data": {"id": product_id}}
     r = _get_redis()
     r.lpush(current_app.config.get('PRODUCT_QUEUE', 'product_queue'), json.dumps(message))

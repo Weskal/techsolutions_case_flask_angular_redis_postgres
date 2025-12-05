@@ -1,29 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
-  standalone: false,
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   username: string = '';
   password: string = '';
   errorMessage: string = '';
-  returnUrl: string = '/products';
 
   constructor(
     private authService: AuthService,
-    private router: Router,
-    private route: ActivatedRoute
+    private router: Router
   ) {}
-
-  ngOnInit(): void {
-    // Pegar a URL de retorno dos query params
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/products';
-  }
 
   onLogin(): void {
     if (!this.username || !this.password) {
@@ -32,11 +24,11 @@ export class LoginComponent implements OnInit {
     }
 
     this.authService.login(this.username, this.password).subscribe({
-      next: (response: any) => {
-        // Redirecionar para a página que estava tentando acessar
-        this.router.navigateByUrl(this.returnUrl);
+      next: (response) => {
+        this.router.navigate(['/products']);
       },
-      error: (error: any) => {
+      error: (error) => {
+        // Seu backend retorna { "message": "credenciais inválidas" }
         this.errorMessage = error.error?.message || 'Usuário ou senha inválidos';
         console.error('Login error:', error);
       }

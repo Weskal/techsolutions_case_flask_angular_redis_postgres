@@ -2,7 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { LoginResponse, User } from '../models/user.model';
+
+export interface LoginResponse {
+  access_token: string;
+  message?: string;
+}
+
+export interface RegisterResponse {
+  id: number;
+  username: string;
+  message?: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -26,8 +36,8 @@ export class AuthService {
       );
   }
 
-  register(username: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, { username, password });
+  register(username: string, password: string): Observable<RegisterResponse> {
+    return this.http.post<RegisterResponse>(`${this.apiUrl}/register`, { username, password });
   }
 
   logout(): void {

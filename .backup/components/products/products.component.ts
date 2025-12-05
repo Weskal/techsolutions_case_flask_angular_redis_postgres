@@ -6,9 +6,8 @@ import { Product } from '../../models/product.model';
 
 @Component({
   selector: 'app-products',
-  standalone: false,
   templateUrl: './products.component.html',
-  styleUrl: './products.component.css'
+  styleUrls: ['./products.component.css']
 })
 export class ProductsComponent implements OnInit {
   products: Product[] = [];
@@ -36,10 +35,10 @@ export class ProductsComponent implements OnInit {
 
   loadProducts(): void {
     this.productService.getProducts().subscribe({
-      next: (data: Product[]) => {
+      next: (data) => {
         this.products = data;
       },
-      error: (error: any) => {
+      error: (error) => {
         console.error('Error loading products:', error);
         this.errorMessage = 'Erro ao carregar produtos';
       }
@@ -74,7 +73,7 @@ export class ProductsComponent implements OnInit {
 
     if (this.editMode && this.currentProduct.id) {
       this.productService.updateProduct(this.currentProduct.id, this.currentProduct).subscribe({
-        next: (response: any) => {
+        next: (response) => {
           this.successMessage = 'Produto atualizado! Aguardando processamento...';
           setTimeout(() => {
             this.loadProducts();
@@ -82,13 +81,13 @@ export class ProductsComponent implements OnInit {
             this.successMessage = '';
           }, 2000);
         },
-        error: (error: any) => {
+        error: (error) => {
           this.errorMessage = error.error?.error || 'Erro ao atualizar produto';
         }
       });
     } else {
       this.productService.createProduct(this.currentProduct).subscribe({
-        next: (response: any) => {
+        next: (response) => {
           this.successMessage = 'Produto criado! Aguardando processamento...';
           setTimeout(() => {
             this.loadProducts();
@@ -96,7 +95,7 @@ export class ProductsComponent implements OnInit {
             this.successMessage = '';
           }, 2000);
         },
-        error: (error: any) => {
+        error: (error) => {
           this.errorMessage = error.error?.error || 'Erro ao criar produto';
         }
       });
@@ -106,14 +105,14 @@ export class ProductsComponent implements OnInit {
   deleteProduct(id: number): void {
     if (confirm('Tem certeza que deseja excluir este produto?')) {
       this.productService.deleteProduct(id).subscribe({
-        next: (response: any) => {
+        next: (response) => {
           this.successMessage = 'Produto excluído! Aguardando processamento...';
           setTimeout(() => {
             this.loadProducts();
             this.successMessage = '';
           }, 2000);
         },
-        error: (error: any) => {
+        error: (error) => {
           this.errorMessage = error.error?.error || 'Erro ao excluir produto';
         }
       });

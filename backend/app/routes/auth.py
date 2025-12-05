@@ -35,7 +35,7 @@ def login():
     
     user = authenticate_user(username, password)
     if not user:
-        return {"message": "credenciais inválidas"}
+        return {"message": "credenciais inválidas"}, 401
     
     #user_id_str = f"{user.id}"
     user_id_str = str({user.id})

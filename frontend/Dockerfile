@@ -1,26 +1,23 @@
-# Dockerfile Angular 19 + Node 18 + Vite (testes)
+# Dockerfile Angular 19 + Node 18
 FROM node:18-bullseye
 
 # Diretório de trabalho
 WORKDIR /app
 
-# Copia apenas package.json e package-lock.json para instalar dependências
+# Copiar package.json e package-lock.json
 COPY package*.json ./
 
-# Downgrade npm para evitar bugs com optional dependencies nativas
-RUN npm install -g npm@9
-
-# Instala dependências de forma limpa
+# Instalar dependências
 RUN npm ci
 
-# Copia o restante do código
+# Copiar o código
 COPY . .
 
-# Build do Vite para garantir que binários nativos sejam baixados
-RUN npx vite build || true
+# Limpar cache do Angular
+RUN rm -rf .angular dist
 
-# Porta padrão do dev server Angular/Vite
+# Expor porta
 EXPOSE 4200
 
-# Comando para rodar a aplicação em dev mode (ou troque para "start" / prod se quiser)
-CMD ["npm", "run", "dev"]
+# Comando para rodar em modo desenvolvimento
+CMD ["npm", "start", "--", "--host", "0.0.0.0", "--poll", "2000"]
